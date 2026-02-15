@@ -1,7 +1,9 @@
 import { View, Text, StyleSheet, FlatList, TouchableOpacity, Alert, ActivityIndicator } from 'react-native';
+import { StatusBar } from 'expo-status-bar';
 import { useEffect, useState } from 'react';
 import { getInsults, deleteInsult } from '../fire';
 import InsultItem from '../components/InsultItem';
+import BackButton from '../components/BackButton';
 
 export default function CollectionScreen({ navigation }) {
   const [insults, setInsults] = useState([]);
@@ -65,6 +67,7 @@ export default function CollectionScreen({ navigation }) {
   if (isLoading) {
     return (
       <View style={styles.loadingContainer}>
+        <StatusBar style="light" />
         <ActivityIndicator size="large" color="#e74c3c" />
         <Text style={styles.loadingText}>Chargement de votre collection...</Text>
       </View>
@@ -73,6 +76,7 @@ export default function CollectionScreen({ navigation }) {
 
   return (
     <View style={styles.container}>
+      <StatusBar style="light" />
       {insults.length === 0 ? (
         <View style={styles.emptyContainer}>
           <Text style={styles.emptyIcon}>📚</Text>
@@ -96,6 +100,7 @@ export default function CollectionScreen({ navigation }) {
           />
         </>
       )}
+      <BackButton />
     </View>
   );
 }
@@ -130,6 +135,7 @@ const styles = StyleSheet.create({
   },
   listContainer: {
     padding: 10,
+    paddingBottom: 80,
   },
   itemContainer: {
     flexDirection: 'row',

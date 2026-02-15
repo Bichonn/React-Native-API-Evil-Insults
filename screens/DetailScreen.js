@@ -1,5 +1,7 @@
-import { View, Text, StyleSheet, TouchableOpacity, Alert } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Alert, ScrollView } from 'react-native';
+import { StatusBar } from 'expo-status-bar';
 import { addInsult } from '../fire';
+import BackButton from '../components/BackButton';
 
 export default function DetailScreen({ route }) {
   const { item, fromCollection } = route.params;
@@ -23,7 +25,9 @@ export default function DetailScreen({ route }) {
 
   return (
     <View style={styles.container}>
-      <View style={styles.card}>
+      <StatusBar style="light" />
+      <ScrollView contentContainerStyle={styles.scrollContent}>
+        <View style={styles.card}>
         <Text style={styles.title}>Insulte #{item.number}</Text>
         
         <Text style={styles.insult}>"{item.insult}"</Text>
@@ -57,6 +61,8 @@ export default function DetailScreen({ route }) {
           </>
         )}
       </View>
+      </ScrollView>
+      <BackButton />
     </View>
   );
 }
@@ -64,9 +70,13 @@ export default function DetailScreen({ route }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 20,
     backgroundColor: '#2c3e50',
+  },
+  scrollContent: {
+    padding: 20,
     justifyContent: 'center',
+    flexGrow: 1,
+    paddingBottom: 100,
   },
   card: {
     backgroundColor: '#34495e',

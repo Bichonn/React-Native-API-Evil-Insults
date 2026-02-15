@@ -5,7 +5,7 @@ import CustomButton from '../components/CustomButton';
 export default function HomeScreen({ navigation }) {
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>😈 Evil Insult Generator 😈</Text>
+      <Text style={styles.title}>😈 Evil Insult 😈 Generator</Text>
       <Text style={styles.subtitle}>Prêt pour une dose de méchanceté ?</Text>
 
       <CustomButton onPress={() => navigation.navigate('ListScreen')}>
@@ -18,7 +18,7 @@ export default function HomeScreen({ navigation }) {
         📚 Ma Collection
       </CustomButton>
 
-      <StatusBar style="light" />
+      <StatusBar />
     </View>
   );
 }

@@ -1,8 +1,10 @@
 import { View, StyleSheet, FlatList, ActivityIndicator } from 'react-native';
+import { StatusBar } from 'expo-status-bar';
 import { useEffect, useState, useRef } from 'react';
 import fetchRandomInsult from '../services/api';
 import RandomInsultGenerator from '../components/RandomInsultGenerator';
 import InsultItem from '../components/InsultItem';
+import BackButton from '../components/BackButton';
 
 export default function ListScreen({ navigation }) {
   const [insults, setInsults] = useState([]);
@@ -33,7 +35,7 @@ export default function ListScreen({ navigation }) {
     const maxAttempts = 20;
     let attempts = 0;
     
-    while (newInsults.length < 5 && attempts < maxAttempts) {
+    while (newInsults.length < 3 && attempts < maxAttempts) {
       const insult = await fetchRandomInsult();
       if (insult && !currentInsults.some(existing => existing.insult === insult.insult) &&
           !newInsults.some(existing => existing.insult === insult.insult)) {
@@ -53,6 +55,7 @@ export default function ListScreen({ navigation }) {
 
   return (
     <View style={styles.container}>
+        <StatusBar style="light" />
         <RandomInsultGenerator navigation={navigation} />
 
         {isLoading ? (
@@ -69,6 +72,7 @@ export default function ListScreen({ navigation }) {
             )}
             onEndReached={loadMoreInsults}
             onEndReachedThreshold={0.5}
+            contentContainerStyle={styles.listContent}
             ListFooterComponent={() => (
               isLoadingMore ? (
                 <View style={styles.footerLoader}>
@@ -78,6 +82,7 @@ export default function ListScreen({ navigation }) {
             )}
         />
         )}
+        <BackButton />
     </View>
   );
 }
@@ -87,6 +92,9 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 10,
     backgroundColor: '#2c3e50',
+  },
+  listContent: {
+    paddingBottom: 80,
   },
   footerLoader: {
     paddingVertical: 20,
