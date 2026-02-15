@@ -1,12 +1,14 @@
-import { View, Text, StyleSheet, FlatList, ActivityIndicator, Pressable } from 'react-native';
-import { useEffect, useState } from 'react';
+import { View, StyleSheet, FlatList, ActivityIndicator } from 'react-native';
+import { useEffect, useState, useRef } from 'react';
 import fetchRandomInsult from '../services/api';
-import CustomButton from '../components/CustomButton';
+import RandomInsultGenerator from '../components/RandomInsultGenerator';
+import InsultItem from '../components/InsultItem';
 
 export default function ListScreen({ navigation }) {
   const [insults, setInsults] = useState([]);
-  const [randomInsult, setRandomInsult] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [isLoadingMore, setIsLoadingMore] = useState(false);
+  const isLoadingMoreRef = useRef(false);
 
   useEffect(() => {
     async function loadData() {
@@ -19,33 +21,39 @@ export default function ListScreen({ navigation }) {
     loadData();
   }, []);
 
-  const generateInsult = async () => {
-    const newInsult = await fetchRandomInsult();
-    if (newInsult) {
-      setRandomInsult(newInsult);
+  const loadMoreInsults = async () => {
+    if (isLoadingMoreRef.current) return;
+    
+    isLoadingMoreRef.current = true;
+    setIsLoadingMore(true);
+    const startTime = Date.now();
+    
+    const currentInsults = insults;
+    const newInsults = [];
+    const maxAttempts = 20;
+    let attempts = 0;
+    
+    while (newInsults.length < 5 && attempts < maxAttempts) {
+      const insult = await fetchRandomInsult();
+      if (insult && !currentInsults.some(existing => existing.insult === insult.insult) &&
+          !newInsults.some(existing => existing.insult === insult.insult)) {
+        newInsults.push(insult);
+      }
+      attempts++;
     }
+    
+    const elapsedTime = Date.now() - startTime;
+    const remainingTime = Math.max(0, 1000 - elapsedTime);
+    await new Promise(resolve => setTimeout(resolve, remainingTime));
+    
+    setInsults(prevInsults => [...prevInsults, ...newInsults]);
+    setIsLoadingMore(false);
+    isLoadingMoreRef.current = false;
   };
 
   return (
     <View style={styles.container}>
-        <View style={styles.buttonContainer}>
-          <CustomButton onPress={generateInsult}>
-            Générer une insulte
-          </CustomButton>
-        </View>
-
-        {randomInsult && (
-          <Pressable 
-            style={({ pressed }) => [
-              styles.randomInsultContainer,
-              pressed && styles.itemPressed
-            ]}
-            onPress={() => navigation.navigate('DetailScreen', { item: randomInsult })}
-          >
-            <Text style={styles.insultText}>"{randomInsult.insult}"</Text>
-            {randomInsult.created && <Text style={styles.dateText}>Created: {randomInsult.created}</Text>}
-          </Pressable>
-        )}
+        <RandomInsultGenerator navigation={navigation} />
 
         {isLoading ? (
             <ActivityIndicator size="large" color="#e74c3c" />
@@ -54,16 +62,19 @@ export default function ListScreen({ navigation }) {
             data={insults}
             keyExtractor={(item, index) => index.toString()}
             renderItem={({ item }) => (
-            <Pressable 
-              style={({ pressed }) => [
-                styles.itemContainer,
-                pressed && styles.itemPressed
-              ]}
-              onPress={() => navigation.navigate('DetailScreen', { item })}
-            >
-                <Text style={styles.insultText}>"{item.insult}"</Text>
-                {item.created && <Text style={styles.dateText}>Created: {item.created}</Text>}
-            </Pressable>
+              <InsultItem 
+                item={item}
+                onPress={() => navigation.navigate('DetailScreen', { item })}
+              />
+            )}
+            onEndReached={loadMoreInsults}
+            onEndReachedThreshold={0.5}
+            ListFooterComponent={() => (
+              isLoadingMore ? (
+                <View style={styles.footerLoader}>
+                  <ActivityIndicator size="large" color="#e74c3c" />
+                </View>
+              ) : null
             )}
         />
         )}
@@ -75,67 +86,11 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 10,
-    backgroundColor: '#2c3e50', // Couleur de fond du HomeScreen
+    backgroundColor: '#2c3e50',
   },
-  buttonContainer: {
-    marginBottom: 20,
-    marginTop: 10,
-  },
-  center: {
-    flex: 1,
-    justifyContent: 'center',
+  footerLoader: {
+    paddingVertical: 20,
     alignItems: 'center',
+    justifyContent: 'center',
   },
-  itemContainer: {
-    padding: 15,
-    marginVertical: 8,
-    backgroundColor: '#34495e', // Légèrement plus clair que le fond
-    borderRadius: 10,
-    borderLeftWidth: 5,
-    borderLeftColor: '#c0392b', // Accent rouge
-    elevation: 3,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-  },
-  itemPressed: {
-    opacity: 0.8,
-  },
-  randomInsultContainer: {
-    padding: 15,
-    marginBottom: 15,
-    backgroundColor: '#e74c3c', // Rouge vif pour se démarquer
-    borderRadius: 10,
-    elevation: 5,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 3 },
-    shadowOpacity: 0.3,
-    shadowRadius: 4.65,
-  },
-  randomInsultLabel: {
-    fontSize: 14,
-    fontWeight: 'bold',
-    color: '#fff',
-    marginBottom: 8,
-    textTransform: 'uppercase',
-  },
-  listTitle: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    color: '#ecf0f1',
-    marginBottom: 10,
-    marginTop: 5,
-  },
-  insultText: {
-    fontSize: 16,
-    fontWeight: 'bold',
-    fontStyle: 'italic',
-    marginBottom: 5,
-    color: '#ecf0f1', // Texte clair
-  },
-  dateText: {
-    fontSize: 12,
-    color: '#95a5a6', // Gris clair pour les infos secondaires
-  }
 });
