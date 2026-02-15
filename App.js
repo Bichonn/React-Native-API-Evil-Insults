@@ -3,6 +3,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import HomeScreen from './screens/HomeScreen';
 import ListScreen from './screens/ListScreen';
 import DetailScreen from './screens/DetailScreen';
+import CollectionScreen from './screens/CollectionScreen';
 
 const Stack = createNativeStackNavigator()
 
@@ -14,6 +15,7 @@ export default function App() {
         <Stack.Screen name="HomeScreen" component={HomeScreen} options={{ title: 'Accueil' }}/>
         <Stack.Screen name="ListScreen" component={ListScreen} options={{ title: 'Liste des Insultes' }}/>
         <Stack.Screen name="DetailScreen" component={DetailScreen} options={{ title: 'Détail de l\'Insulte' }}/>
+        <Stack.Screen name="CollectionScreen" component={CollectionScreen} options={{ title: 'Ma Collection' }}/>
       </Stack.Navigator>
     </NavigationContainer>
   );

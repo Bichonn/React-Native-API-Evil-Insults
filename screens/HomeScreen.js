@@ -12,6 +12,12 @@ export default function HomeScreen({ navigation }) {
         Voir les Insultes
       </CustomButton>
 
+      <View style={styles.buttonSpacer} />
+
+      <CustomButton onPress={() => navigation.navigate('CollectionScreen')}>
+        📚 Ma Collection
+      </CustomButton>
+
       <StatusBar style="light" />
     </View>
   );
@@ -42,5 +48,8 @@ const styles = StyleSheet.create({
     color: '#ecf0f1',
     marginBottom: 40,
     fontStyle: 'italic',
+  },
+  buttonSpacer: {
+    height: 15,
   },
 });

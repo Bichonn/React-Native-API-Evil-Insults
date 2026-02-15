@@ -1,7 +1,25 @@
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Alert } from 'react-native';
+import { addInsult } from '../fire';
 
 export default function DetailScreen({ route }) {
-  const { item } = route.params;
+  const { item, fromCollection } = route.params;
+
+  const handleAddToCollection = async () => {
+    const result = await addInsult(item);
+    if (result.success) {
+      Alert.alert(
+        'Succès', 
+        'L\'insulte a été ajoutée à votre collection !',
+        [{ text: 'OK' }]
+      );
+    } else {
+      Alert.alert(
+        'Erreur', 
+        'Impossible d\'ajouter l\'insulte à la collection',
+        [{ text: 'OK' }]
+      );
+    }
+  };
 
   return (
     <View style={styles.container}>
@@ -26,6 +44,18 @@ export default function DetailScreen({ route }) {
           <Text style={styles.label}>Créé le :</Text>
           <Text style={styles.value}>{item.created}</Text>
         </View>
+
+        {!fromCollection && (
+          <>
+            <View style={styles.separator} />
+            <TouchableOpacity 
+              style={styles.addButton}
+              onPress={handleAddToCollection}
+            >
+              <Text style={styles.addButtonText}>📚 Ajouter à ma collection</Text>
+            </TouchableOpacity>
+          </>
+        )}
       </View>
     </View>
   );
@@ -81,6 +111,23 @@ const styles = StyleSheet.create({
   },
   value: {
     color: '#bdc3c7',
+    fontWeight: 'bold',
+  },
+  addButton: {
+    backgroundColor: '#27ae60',
+    padding: 15,
+    borderRadius: 10,
+    alignItems: 'center',
+    marginTop: 10,
+    elevation: 3,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.3,
+    shadowRadius: 3,
+  },
+  addButtonText: {
+    color: '#fff',
+    fontSize: 16,
     fontWeight: 'bold',
   },
 });
