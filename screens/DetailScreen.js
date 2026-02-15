@@ -1,7 +1,6 @@
 import { View, Text, StyleSheet } from 'react-native';
 
 export default function DetailScreen({ route }) {
-  // On récupère les données passées par la navigation
   const { item } = route.params;
 
   return (
@@ -36,11 +35,11 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 20,
-    backgroundColor: '#2c3e50', // Fond sombre
+    backgroundColor: '#2c3e50',
     justifyContent: 'center',
   },
   card: {
-    backgroundColor: '#34495e', // Fond de carte sombre
+    backgroundColor: '#34495e',
     padding: 20,
     borderRadius: 15,
     elevation: 5,
@@ -49,11 +48,11 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.3,
     shadowRadius: 4,
     borderWidth: 1,
-    borderColor: '#c0392b', // Bordure rouge subtile
+    borderColor: '#c0392b',
   },
   title: {
     fontSize: 14,
-    color: '#e74c3c', // Rouge vif
+    color: '#e74c3c',
     marginBottom: 10,
     textTransform: 'uppercase',
     fontWeight: 'bold',
@@ -61,7 +60,7 @@ const styles = StyleSheet.create({
   insult: {
     fontSize: 24,
     fontWeight: 'bold',
-    color: '#ecf0f1', // Blanc
+    color: '#ecf0f1',
     marginBottom: 20,
     fontStyle: 'italic',
     textAlign: 'center',
@@ -78,10 +77,10 @@ const styles = StyleSheet.create({
   },
   label: {
     fontWeight: '600',
-    color: '#95a5a6', // Gris moyen
+    color: '#95a5a6',
   },
   value: {
-    color: '#bdc3c7', // Gris clair
+    color: '#bdc3c7',
     fontWeight: 'bold',
   },
 });
