@@ -1,60 +1,20 @@
-import { StatusBar } from 'expo-status-bar';
-import { useState } from 'react';
-import { StyleSheet, Text, View, FlatList } from 'react-native';
-import { Projects as InitialProjects } from './data/projectsData';
-import ProjectItem from './components/ProjectItem';
-import CreateProject from './components/CreateProject';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import HomeScreen from './screens/HomeScreen';
+import ListScreen from './screens/ListScreen';
+import DetailScreen from './screens/DetailScreen';
+
+const Stack = createNativeStackNavigator()
 
 export default function App() {
-  const [projects, setProjects] = useState(InitialProjects);
-  const [selectedProjectId, setSelectedProjectId] = useState(null);
-
-  const handleProjectSelect = (id) => {
-    setSelectedProjectId(selectedProjectId === id ? null : id);
-  };
-
-  const handleAddProject = (newProject) => {
-    setProjects([newProject, ...projects]);
-  };
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.Title}>Modelify</Text>
-
-      <CreateProject onAddProject={handleAddProject} />
-      
-      <FlatList
-        style={styles.listProject}
-        data={projects} 
-        keyExtractor={(item) => item.id.toString()} 
-        renderItem={({ item }) => (
-          <ProjectItem 
-            item={item}
-            isSelected={selectedProjectId === item.id}
-            onSelect={() => handleProjectSelect(item.id)}
-          />
-        )}
-      />
-      
-      <StatusBar style="auto" />
-    </View>
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen name="HomeScreen" component={HomeScreen} options={{ title: 'Accueil' }}/>
+        <Stack.Screen name="ListScreen" component={ListScreen} options={{ title: 'Liste des Insultes' }}/>
+        <Stack.Screen name="DetailScreen" component={DetailScreen} options={{ title: 'Détail de l\'Insulte' }}/>
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  Title: {
-    marginTop: 60,
-    fontSize: 32,
-    fontWeight: 'bold',
-  },
-  listProject: {
-    marginTop: 30,
-    width: '80%',
-  },
-});
