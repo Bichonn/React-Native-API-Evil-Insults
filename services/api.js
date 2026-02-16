@@ -1,6 +1,6 @@
 export default async function fetchRandomInsult() {
   try {
-    const response = await fetch('https://evilinsult.com/generate_insult.php?lang=en&type=json');
+    const response = await fetch('https://evilinsult.com/generate_insult.php?lang=fr&type=json');
     const json = await response.json();
     return json;
   } catch (error) {

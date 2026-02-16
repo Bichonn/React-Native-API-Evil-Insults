@@ -1,6 +1,6 @@
 import { View, Text, StyleSheet, FlatList, TouchableOpacity, Alert, ActivityIndicator } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useMemo } from 'react';
 import * as Haptics from 'expo-haptics';
 import { getInsults, deleteInsult } from '../fire';
 import InsultItem from '../components/InsultItem';
@@ -9,6 +9,7 @@ import BackButton from '../components/BackButton';
 export default function FavorisScreen({ navigation }) {
   const [insults, setInsults] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [sortOrder, setSortOrder] = useState('desc'); // 'asc' ou 'desc'
 
   useEffect(() => {
     const unsubscribe = getInsults((fetchedInsults) => {
@@ -22,6 +23,20 @@ export default function FavorisScreen({ navigation }) {
       }
     };
   }, []);
+
+  const sortedInsults = useMemo(() => {
+    const sorted = [...insults].sort((a, b) => {
+      const viewsA = a.shown || 0;
+      const viewsB = b.shown || 0;
+      return sortOrder === 'desc' ? viewsB - viewsA : viewsA - viewsB;
+    });
+    return sorted;
+  }, [insults, sortOrder]);
+
+  const toggleSortOrder = () => {
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+    setSortOrder(sortOrder === 'desc' ? 'asc' : 'desc');
+  };
 
   const handleDelete = (insult) => {
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
@@ -90,9 +105,14 @@ export default function FavorisScreen({ navigation }) {
             <Text style={styles.headerText}>
               {insults.length} insulte{insults.length > 1 ? 's' : ''} dans vos favoris
             </Text>
+            <TouchableOpacity style={styles.sortButton} onPress={toggleSortOrder}>
+              <Text style={styles.sortButtonText}>
+                👁️ Vues {sortOrder === 'desc' ? '↓' : '↑'}
+              </Text>
+            </TouchableOpacity>
           </View>
           <FlatList
-            data={insults}
+            data={sortedInsults}
             keyExtractor={(item) => item.id}
             renderItem={renderInsultItem}
             contentContainerStyle={styles.listContainer}
@@ -131,6 +151,19 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: 'bold',
     textAlign: 'center',
+  },
+  sortButton: {
+    backgroundColor: '#e74c3c',
+    paddingVertical: 8,
+    paddingHorizontal: 15,
+    borderRadius: 20,
+    marginTop: 10,
+    alignSelf: 'center',
+  },
+  sortButtonText: {
+    color: '#fff',
+    fontSize: 14,
+    fontWeight: 'bold',
   },
   listContainer: {
     padding: 10,

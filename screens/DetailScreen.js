@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Alert, ScrollView } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import * as Haptics from 'expo-haptics';
@@ -6,6 +7,10 @@ import BackButton from '../components/BackButton';
 
 export default function DetailScreen({ route }) {
   const { item, fromFavoris } = route.params;
+
+  useEffect(() => {
+    console.log('Consultation du détail de l\'insulte #' + item.number + ':', item.insult);
+  }, []);
 
   const handleAddToFavoris = async () => {
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);

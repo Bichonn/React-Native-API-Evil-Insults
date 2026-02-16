@@ -16,7 +16,7 @@ export default function InsultItem({ item, onPress }) {
       onPress={handlePress}
     >
       <Text style={styles.insultText}>"{item.insult}"</Text>
-      {item.created && <Text style={styles.dateText}>Created: {item.created}</Text>}
+      {item.shown && <Text style={styles.shownText}>vues : {item.shown}</Text>}
     </Pressable>
   );
 }
@@ -45,7 +45,7 @@ const styles = StyleSheet.create({
     marginBottom: 5,
     color: '#ecf0f1',
   },
-  dateText: {
+  shownText: {
     fontSize: 12,
     color: '#95a5a6',
   },
