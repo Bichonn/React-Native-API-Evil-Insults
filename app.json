@@ -4,11 +4,11 @@
     "slug": "evil-insults",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/smiling_imp.png",
+    "icon": "./assets/trident.png",
     "userInterfaceStyle": "light",
     "newArchEnabled": true,
     "splash": {
-      "image": "./assets/smiling_imp.png",
+      "image": "./assets/trident.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
