@@ -1,3 +1,5 @@
+// Écran liste - Affichage des insultes avec scroll infini
+
 import { View, StyleSheet, FlatList, ActivityIndicator } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import { useEffect, useState, useRef } from 'react';
@@ -10,7 +12,7 @@ export default function ListScreen({ navigation }) {
   const [insults, setInsults] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isLoadingMore, setIsLoadingMore] = useState(false);
-  const isLoadingMoreRef = useRef(false);
+  const isLoadingMoreRef = useRef(false); // Évite les appels multiples simultanés
 
   useEffect(() => {
     async function loadData() {

@@ -1,3 +1,4 @@
+// Écran favoris - Liste des insultes sauvegardées (Firebase)
 import { View, Text, StyleSheet, FlatList, TouchableOpacity, Alert, ActivityIndicator } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import { useEffect, useState, useMemo } from 'react';
@@ -9,7 +10,7 @@ import BackButton from '../components/BackButton';
 export default function FavorisScreen({ navigation }) {
   const [insults, setInsults] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [sortOrder, setSortOrder] = useState('desc'); // 'asc' ou 'desc'
+  const [sortOrder, setSortOrder] = useState('desc'); // Tri par nombre de vues
 
   useEffect(() => {
     const unsubscribe = getInsults((fetchedInsults) => {

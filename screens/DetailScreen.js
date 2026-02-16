@@ -1,3 +1,4 @@
+// Écran détail - Affiche les infos complètes d'une insulte
 import { useEffect } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Alert, ScrollView } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
@@ -6,7 +7,7 @@ import { addInsult } from '../fire';
 import BackButton from '../components/BackButton';
 
 export default function DetailScreen({ route }) {
-  const { item, fromFavoris } = route.params;
+  const { item, fromFavoris } = route.params; // fromFavoris: masque le bouton d'ajout
 
   useEffect(() => {
     console.log('Consultation du détail de l\'insulte #' + item.number + ':', item.insult);

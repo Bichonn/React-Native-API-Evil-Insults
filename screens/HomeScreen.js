@@ -1,3 +1,5 @@
+// Écran d'accueil - Navigation vers les différentes sections
+
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
 import CustomButton from '../components/CustomButton';

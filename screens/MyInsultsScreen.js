@@ -1,3 +1,5 @@
+// Écran mes insultes - CRUD complet pour les insultes personnelles
+
 import { View, Text, StyleSheet, FlatList, TouchableOpacity, Alert, ActivityIndicator } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import { useEffect, useState } from 'react';

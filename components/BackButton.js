@@ -1,3 +1,4 @@
+// Bouton retour réutilisable avec retour haptique
 import { TouchableOpacity, Text, StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import * as Haptics from 'expo-haptics';

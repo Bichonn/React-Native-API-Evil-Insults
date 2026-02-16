@@ -1,3 +1,4 @@
+// Générateur d'insulte aléatoire via l'API
 import { View, Text, StyleSheet, Pressable } from 'react-native';
 import { useState } from 'react';
 import * as Haptics from 'expo-haptics';

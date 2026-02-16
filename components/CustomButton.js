@@ -1,3 +1,4 @@
+// Bouton personnalisé avec animation de pression et retour haptique
 import { Pressable, Text, StyleSheet, View } from 'react-native';
 import * as Haptics from 'expo-haptics';
 

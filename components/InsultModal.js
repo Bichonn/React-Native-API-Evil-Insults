@@ -1,3 +1,4 @@
+// Modal pour créer ou modifier une insulte personnelle
 import { Modal, View, Text, TextInput, TouchableOpacity, TouchableWithoutFeedback, Keyboard, StyleSheet } from 'react-native';
 
 export default function InsultModal({ visible, onClose, onSave, value, onChangeText, isEditing }) {

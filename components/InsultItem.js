@@ -1,3 +1,4 @@
+// Composant d'affichage d'une insulte dans une liste
 import { Pressable, Text, StyleSheet } from 'react-native';
 import * as Haptics from 'expo-haptics';
 
