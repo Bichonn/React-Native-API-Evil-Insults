@@ -1,5 +1,6 @@
 import { View, Text, StyleSheet, Pressable } from 'react-native';
 import { useState } from 'react';
+import * as Haptics from 'expo-haptics';
 import fetchRandomInsult from '../services/api';
 import CustomButton from './CustomButton';
 
@@ -10,6 +11,7 @@ export default function RandomInsultGenerator({ navigation }) {
     const newInsult = await fetchRandomInsult();
     if (newInsult) {
       setRandomInsult(newInsult);
+      Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
     }
   };
 
@@ -45,7 +47,7 @@ const styles = StyleSheet.create({
   randomInsultContainer: {
     padding: 15,
     marginBottom: 15,
-    backgroundColor: '#e74c3c', // Rouge vif pour se démarquer
+    backgroundColor: '#e74c3c',
     borderRadius: 10,
     elevation: 5,
     shadowColor: '#000',
@@ -61,10 +63,10 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     fontStyle: 'italic',
     marginBottom: 5,
-    color: '#ecf0f1', // Texte clair
+    color: '#ecf0f1',
   },
   dateText: {
     fontSize: 12,
-    color: '#95a5a6', // Gris clair pour les infos secondaires
+    color: '#95a5a6',
   },
 });

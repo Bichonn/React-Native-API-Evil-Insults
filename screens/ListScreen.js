@@ -14,7 +14,7 @@ export default function ListScreen({ navigation }) {
 
   useEffect(() => {
     async function loadData() {
-      const promises = Array(5).fill().map(() => fetchRandomInsult());
+      const promises = Array(3).fill().map(() => fetchRandomInsult());
       const results = await Promise.all(promises);
       const validInsults = results.filter(item => item !== null);
       setInsults(validInsults);

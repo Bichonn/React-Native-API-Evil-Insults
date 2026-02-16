@@ -1,13 +1,19 @@
 import { TouchableOpacity, Text, StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import * as Haptics from 'expo-haptics';
 
 export default function BackButton() {
   const navigation = useNavigation();
 
+  const handleGoBack = () => {
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+    navigation.goBack();
+  };
+
   return (
     <TouchableOpacity 
       style={styles.backButton}
-      onPress={() => navigation.goBack()}
+      onPress={handleGoBack}
     >
       <Text style={styles.backButtonText}>← Retour</Text>
     </TouchableOpacity>

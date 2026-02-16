@@ -1,6 +1,7 @@
 import { View, Text, StyleSheet, FlatList, TouchableOpacity, Alert, ActivityIndicator } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import { useEffect, useState } from 'react';
+import * as Haptics from 'expo-haptics';
 import { getMyInsults, addMyInsult, updateMyInsult, deleteMyInsult } from '../fire';
 import BackButton from '../components/BackButton';
 import InsultModal from '../components/InsultModal';
@@ -34,10 +35,12 @@ export default function MyInsultsScreen() {
 
   const handleSave = async () => {
     if (!insultText.trim()) {
+      Haptics.notificationAsync(Haptics.NotificationFeedbackType.Warning);
       Alert.alert('Erreur', 'Veuillez entrer une insulte');
       return;
     }
 
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
     const action = currentInsult 
       ? updateMyInsult(currentInsult.id, insultText.trim())
       : addMyInsult(insultText.trim());
@@ -45,11 +48,17 @@ export default function MyInsultsScreen() {
     const result = await action;
     const message = currentInsult ? 'Insulte modifiée' : 'Insulte créée';
     
+    if (result.success) {
+      Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
+    } else {
+      Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
+    }
     Alert.alert(result.success ? 'Succès' : 'Erreur', result.success ? message : 'Une erreur est survenue');
     if (result.success) closeModal();
   };
 
   const handleDelete = (insult) => {
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
     Alert.alert('Supprimer', 'Voulez-vous vraiment supprimer cette insulte ?', [
       { text: 'Annuler', style: 'cancel' },
       {
@@ -57,6 +66,11 @@ export default function MyInsultsScreen() {
         style: 'destructive',
         onPress: async () => {
           const result = await deleteMyInsult(insult.id);
+          if (result.success) {
+            Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
+          } else {
+            Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
+          }
           Alert.alert(result.success ? 'Succès' : 'Erreur', 
             result.success ? 'Insulte supprimée' : 'Impossible de supprimer');
         },

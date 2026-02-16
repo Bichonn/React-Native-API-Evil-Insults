@@ -1,6 +1,7 @@
 import { View, Text, StyleSheet, FlatList, TouchableOpacity, Alert, ActivityIndicator } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import { useEffect, useState } from 'react';
+import * as Haptics from 'expo-haptics';
 import { getInsults, deleteInsult } from '../fire';
 import InsultItem from '../components/InsultItem';
 import BackButton from '../components/BackButton';
@@ -23,6 +24,7 @@ export default function FavorisScreen({ navigation }) {
   }, []);
 
   const handleDelete = (insult) => {
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
     Alert.alert(
       'Supprimer',
       'Voulez-vous vraiment supprimer cette insulte de vos favoris ?',
@@ -37,8 +39,10 @@ export default function FavorisScreen({ navigation }) {
           onPress: async () => {
             const result = await deleteInsult(insult.id);
             if (result.success) {
+              Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
               Alert.alert('Succès', 'Insulte supprimée de vos favoris');
             } else {
+              Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
               Alert.alert('Erreur', 'Impossible de supprimer l\'insulte');
             }
           },

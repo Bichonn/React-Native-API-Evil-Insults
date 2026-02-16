@@ -1,13 +1,19 @@
 import { Pressable, Text, StyleSheet } from 'react-native';
+import * as Haptics from 'expo-haptics';
 
 export default function InsultItem({ item, onPress }) {
+  const handlePress = () => {
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+    onPress?.();
+  };
+
   return (
     <Pressable 
       style={({ pressed }) => [
         styles.itemContainer,
         pressed && styles.itemPressed
       ]}
-      onPress={onPress}
+      onPress={handlePress}
     >
       <Text style={styles.insultText}>"{item.insult}"</Text>
       {item.created && <Text style={styles.dateText}>Created: {item.created}</Text>}

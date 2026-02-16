@@ -1,5 +1,6 @@
 import { View, Text, StyleSheet, TouchableOpacity, Alert, ScrollView } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
+import * as Haptics from 'expo-haptics';
 import { addInsult } from '../fire';
 import BackButton from '../components/BackButton';
 
@@ -7,14 +8,17 @@ export default function DetailScreen({ route }) {
   const { item, fromFavoris } = route.params;
 
   const handleAddToFavoris = async () => {
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
     const result = await addInsult(item);
     if (result.success) {
+      Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
       Alert.alert(
         'Succès', 
         'L\'insulte a été ajoutée à vos favoris !',
         [{ text: 'OK' }]
       );
     } else {
+      Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
       Alert.alert(
         'Erreur', 
         'Impossible d\'ajouter l\'insulte aux favoris',

@@ -1,14 +1,14 @@
 {
   "expo": {
-    "name": "demo-rn",
-    "slug": "demo-rn",
+    "name": "Evil Insults",
+    "slug": "evil-insults",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
     "newArchEnabled": true,
     "splash": {
-      "image": "./assets/splash-icon.png",
+      "image": "./assets/smiling_imp.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
