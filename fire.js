@@ -19,7 +19,7 @@ const db = getFirestore(app)
 
 // Fonctions CRUD pour la collection d'insultes favoris
 export const getInsults = callback => {
-  const q = query(collection(db, 'insults'), orderBy('savedAt', 'desc'))
+  const q = query(collection(db, 'favoris'), orderBy('savedAt', 'desc'))
   onSnapshot(q, snapshot => {
     let insults = []
     snapshot.forEach(doc => {
@@ -35,7 +35,7 @@ export const addInsult = async (insult) => {
       ...insult,
       savedAt: new Date().toISOString()
     }
-    await addDoc(collection(db, 'insults'), insultData)
+    await addDoc(collection(db, 'favoris'), insultData)
     return { success: true }
   } catch (error) {
     console.error("Erreur lors de l'ajout:", error)
@@ -45,7 +45,7 @@ export const addInsult = async (insult) => {
 
 export const deleteInsult = async (insultId) => {
   try {
-    await deleteDoc(doc(db, 'insults', insultId))
+    await deleteDoc(doc(db, 'favoris', insultId))
     return { success: true }
   } catch (error) {
     console.error("Erreur lors de la suppression:", error)
