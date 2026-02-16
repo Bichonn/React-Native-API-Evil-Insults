@@ -4,20 +4,20 @@ import { addInsult } from '../fire';
 import BackButton from '../components/BackButton';
 
 export default function DetailScreen({ route }) {
-  const { item, fromCollection } = route.params;
+  const { item, fromFavoris } = route.params;
 
-  const handleAddToCollection = async () => {
+  const handleAddToFavoris = async () => {
     const result = await addInsult(item);
     if (result.success) {
       Alert.alert(
         'Succès', 
-        'L\'insulte a été ajoutée à votre collection !',
+        'L\'insulte a été ajoutée à vos favoris !',
         [{ text: 'OK' }]
       );
     } else {
       Alert.alert(
         'Erreur', 
-        'Impossible d\'ajouter l\'insulte à la collection',
+        'Impossible d\'ajouter l\'insulte aux favoris',
         [{ text: 'OK' }]
       );
     }
@@ -49,14 +49,14 @@ export default function DetailScreen({ route }) {
           <Text style={styles.value}>{item.created}</Text>
         </View>
 
-        {!fromCollection && (
+        {!fromFavoris && (
           <>
             <View style={styles.separator} />
             <TouchableOpacity 
               style={styles.addButton}
-              onPress={handleAddToCollection}
+              onPress={handleAddToFavoris}
             >
-              <Text style={styles.addButtonText}>📚 Ajouter à ma collection</Text>
+              <Text style={styles.addButtonText}>⭐ Ajouter à mes favoris</Text>
             </TouchableOpacity>
           </>
         )}

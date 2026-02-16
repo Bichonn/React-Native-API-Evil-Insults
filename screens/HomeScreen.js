@@ -14,8 +14,14 @@ export default function HomeScreen({ navigation }) {
 
       <View style={styles.buttonSpacer} />
 
-      <CustomButton onPress={() => navigation.navigate('CollectionScreen')}>
-        📚 Ma Collection
+      <CustomButton onPress={() => navigation.navigate('FavorisScreen')}>
+        ⭐ Mes Favoris
+      </CustomButton>
+
+      <View style={styles.buttonSpacer} />
+
+      <CustomButton onPress={() => navigation.navigate('MesInsultesScreen')}>
+        ✍️ Mes Insultes
       </CustomButton>
 
       <StatusBar />

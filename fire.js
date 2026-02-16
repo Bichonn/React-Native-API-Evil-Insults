@@ -53,4 +53,54 @@ export const deleteInsult = async (insultId) => {
   }
 }
 
+// Fonctions CRUD pour mes insultes personnelles
+export const getMyInsults = callback => {
+  const q = query(collection(db, 'myInsults'), orderBy('createdAt', 'desc'))
+  return onSnapshot(q, snapshot => {
+    let insults = []
+    snapshot.forEach(doc => {
+      insults.push({ id: doc.id, ...doc.data() })
+    })
+    callback(insults)
+  })
+}
+
+export const addMyInsult = async (insultText) => {
+  try {
+    const insultData = {
+      insult: insultText,
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString()
+    }
+    await addDoc(collection(db, 'myInsults'), insultData)
+    return { success: true }
+  } catch (error) {
+    console.error("Erreur lors de l'ajout:", error)
+    return { success: false, error }
+  }
+}
+
+export const updateMyInsult = async (insultId, newText) => {
+  try {
+    await updateDoc(doc(db, 'myInsults', insultId), {
+      insult: newText,
+      updatedAt: new Date().toISOString()
+    })
+    return { success: true }
+  } catch (error) {
+    console.error("Erreur lors de la modification:", error)
+    return { success: false, error }
+  }
+}
+
+export const deleteMyInsult = async (insultId) => {
+  try {
+    await deleteDoc(doc(db, 'myInsults', insultId))
+    return { success: true }
+  } catch (error) {
+    console.error("Erreur lors de la suppression:", error)
+    return { success: false, error }
+  }
+}
+
 
