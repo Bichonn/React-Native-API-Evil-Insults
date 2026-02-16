@@ -26,7 +26,7 @@ export default function HomeScreen({ navigation }) {
         Mes Insultes
       </CustomButton>
 
-      <StatusBar style='light'/>
+      <StatusBar style='light' />
     </View>
   );
 }
