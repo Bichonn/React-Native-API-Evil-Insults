@@ -60,7 +60,7 @@ export default function DetailScreen({ route }) {
               style={styles.addButton}
               onPress={handleAddToFavoris}
             >
-              <Text style={styles.addButtonText}>⭐ Ajouter à mes favoris</Text>
+              <Text style={styles.addButtonText}>Ajouter à mes favoris</Text>
             </TouchableOpacity>
           </>
         )}

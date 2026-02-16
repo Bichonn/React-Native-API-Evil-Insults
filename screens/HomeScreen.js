@@ -15,16 +15,16 @@ export default function HomeScreen({ navigation }) {
       <View style={styles.buttonSpacer} />
 
       <CustomButton onPress={() => navigation.navigate('FavorisScreen')}>
-        ⭐ Mes Favoris
+        Mes Favoris
       </CustomButton>
 
       <View style={styles.buttonSpacer} />
 
       <CustomButton onPress={() => navigation.navigate('MyInsultsScreen')}>
-        ✍️ Mes Insultes
+        Mes Insultes
       </CustomButton>
 
-      <StatusBar />
+      <StatusBar style='light'/>
     </View>
   );
 }

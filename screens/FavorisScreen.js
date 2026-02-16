@@ -40,7 +40,6 @@ export default function FavorisScreen({ navigation }) {
             const result = await deleteInsult(insult.id);
             if (result.success) {
               Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
-              Alert.alert('Succès', 'Insulte supprimée de vos favoris');
             } else {
               Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
               Alert.alert('Erreur', 'Impossible de supprimer l\'insulte');
@@ -63,7 +62,7 @@ export default function FavorisScreen({ navigation }) {
         style={styles.deleteButton}
         onPress={() => handleDelete(item)}
       >
-        <Text style={styles.deleteButtonText}>🗑️</Text>
+        <Text style={styles.deleteButtonText}>X</Text>
       </TouchableOpacity>
     </View>
   );
@@ -83,11 +82,7 @@ export default function FavorisScreen({ navigation }) {
       <StatusBar style="light" />
       {insults.length === 0 ? (
         <View style={styles.emptyContainer}>
-          <Text style={styles.emptyIcon}>⭐</Text>
           <Text style={styles.emptyText}>Vos favoris sont vides</Text>
-          <Text style={styles.emptySubtext}>
-            Ajoutez des insultes depuis la page de détails
-          </Text>
         </View>
       ) : (
         <>
@@ -175,11 +170,6 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: '#ecf0f1',
     marginBottom: 10,
-    textAlign: 'center',
-  },
-  emptySubtext: {
-    fontSize: 16,
-    color: '#95a5a6',
     textAlign: 'center',
   },
 });

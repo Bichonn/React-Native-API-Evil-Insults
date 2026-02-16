@@ -46,15 +46,14 @@ export default function MyInsultsScreen() {
       : addMyInsult(insultText.trim());
     
     const result = await action;
-    const message = currentInsult ? 'Insulte modifiée' : 'Insulte créée';
     
     if (result.success) {
       Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
+      closeModal();
     } else {
       Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
+      Alert.alert('Erreur', 'Une erreur est survenue');
     }
-    Alert.alert(result.success ? 'Succès' : 'Erreur', result.success ? message : 'Une erreur est survenue');
-    if (result.success) closeModal();
   };
 
   const handleDelete = (insult) => {
@@ -67,12 +66,9 @@ export default function MyInsultsScreen() {
         onPress: async () => {
           const result = await deleteMyInsult(insult.id);
           if (result.success) {
-            Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
           } else {
             Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
           }
-          Alert.alert(result.success ? 'Succès' : 'Erreur', 
-            result.success ? 'Insulte supprimée' : 'Impossible de supprimer');
         },
       },
     ]);
@@ -88,10 +84,10 @@ export default function MyInsultsScreen() {
       </View>
       <View style={styles.itemActions}>
         <TouchableOpacity style={styles.editBtn} onPress={() => openModal(item)}>
-          <Text style={styles.actionText}>✏️</Text>
+          <Text style={styles.actionText}>M</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.deleteBtn} onPress={() => handleDelete(item)}>
-          <Text style={styles.actionText}>🗑️</Text>
+          <Text style={styles.actionText}>X</Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -112,14 +108,12 @@ export default function MyInsultsScreen() {
       <StatusBar style="light" />
       
       <TouchableOpacity style={styles.createBtn} onPress={() => openModal()}>
-        <Text style={styles.createBtnText}>➕ Créer une insulte</Text>
+        <Text style={styles.createBtnText}>Créer une insulte</Text>
       </TouchableOpacity>
 
       {insults.length === 0 ? (
         <View style={styles.centered}>
-          <Text style={styles.emptyIcon}>✍️</Text>
           <Text style={styles.emptyText}>Aucune insulte créée</Text>
-          <Text style={styles.emptySubtext}>Créez votre première insulte !</Text>
         </View>
       ) : (
         <>
@@ -178,19 +172,11 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: 'bold',
   },
-  emptyIcon: {
-    fontSize: 60,
-    marginBottom: 20,
-  },
   emptyText: {
     fontSize: 20,
     color: '#ecf0f1',
     fontWeight: 'bold',
     marginBottom: 10,
-  },
-  emptySubtext: {
-    fontSize: 14,
-    color: '#bdc3c7',
   },
   header: {
     color: '#bdc3c7',

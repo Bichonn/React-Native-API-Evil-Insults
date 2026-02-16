@@ -12,7 +12,7 @@ export default function InsultModal({ visible, onClose, onSave, value, onChangeT
         <View style={styles.overlay}>
           <View style={styles.content}>
             <Text style={styles.title}>
-              {isEditing ? '✏️ Modifier l\'insulte' : '➕ Nouvelle insulte'}
+              {isEditing ? 'Modifier l\'insulte' : 'Nouvelle insulte'}
             </Text>
             
             <TextInput
