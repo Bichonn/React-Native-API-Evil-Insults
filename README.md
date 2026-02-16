@@ -12,6 +12,7 @@ L'objectif est de proposer une expérience divertissante autour de l'humour noir
 - 📜 **Parcourir** une liste d'insultes avec chargement infini (infinite scroll)
 - 🔍 **Consulter** les détails d'une insulte (auteur, date de création, nombre de vues)
 - ⭐ **Sauvegarder** ses insultes favorites dans Firebase
+- 🔃 **Trier** ses favoris par nombre de vues (croissant/décroissant)
 - ✏️ **Créer, modifier et supprimer** ses propres insultes personnalisées
 
 ## Technologies utilisées
@@ -36,6 +37,7 @@ L'objectif est de proposer une expérience divertissante autour de l'humour noir
 ### 📱 Expérience utilisateur
 - **Retour haptique (Haptics)** : Feedback tactile lors des actions importantes (ajout/suppression de favoris) pour confirmer les interactions
 - **Infinite scroll** : Chargement progressif des insultes pour éviter d'attendre
+- **Tri par vues** : Possibilité de trier les favoris par nombre de vues (croissant/décroissant)
 - **Indicateurs de chargement** : ActivityIndicator visible pendant les requêtes API
 - **Alertes de confirmation** : Demande de validation avant les suppressions pour éviter les erreurs
 - **Bouton de retour personnalisé** : Navigation cohérente et accessible
@@ -112,7 +114,7 @@ npx expo start
 
 Endpoint principal :
 ```
-GET https://evilinsult.com/generate_insult.php?lang=en&type=json
+GET https://evilinsult.com/generate_insult.php?lang=fr&type=json
 ```
 
 ## Auteur
