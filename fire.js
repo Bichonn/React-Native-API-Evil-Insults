@@ -17,7 +17,7 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig)
 const db = getFirestore(app)
 
-// Fonctions CRUD pour la collection d'insultes
+// Fonctions CRUD pour la collection d'insultes favoris
 export const getInsults = callback => {
   const q = query(collection(db, 'insults'), orderBy('savedAt', 'desc'))
   onSnapshot(q, snapshot => {

@@ -20,7 +20,7 @@ export default function HomeScreen({ navigation }) {
 
       <View style={styles.buttonSpacer} />
 
-      <CustomButton onPress={() => navigation.navigate('MesInsultesScreen')}>
+      <CustomButton onPress={() => navigation.navigate('MyInsultsScreen')}>
         ✍️ Mes Insultes
       </CustomButton>
 
